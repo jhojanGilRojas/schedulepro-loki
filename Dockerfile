@@ -1,7 +1,7 @@
 FROM grafana/loki:3.5.1
 
 # Copia la configuración personalizada
-COPY local-config.yaml /etc/loki/local-config.yaml
+COPY loki-config.yaml /etc/loki/local-config.yaml
 
 # Crea carpeta de datos con permisos adecuados
 RUN mkdir -p /loki-data && chown -R nobody:nobody /loki-data
