@@ -30,6 +30,9 @@ storage_config:
   filesystem:
     directory: /tmp/loki/chunks
 
+wal:
+  dir: /tmp/loki/wal
+
 compactor:
   working_directory: /tmp/loki/compactor
 
