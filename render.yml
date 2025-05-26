@@ -1,8 +1,0 @@
-services:
-  - type: web
-    name: schedulepro-loki
-    env: docker
-    dockerfilePath: ./Dockerfile
-    ports:
-      - 3100
-    healthCheckPath: /ready

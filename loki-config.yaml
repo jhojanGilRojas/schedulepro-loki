@@ -4,47 +4,45 @@ server:
   http_listen_port: 3100
   grpc_listen_port: 9095
 
-common:
-  instance_addr: 127.0.0.1
-  path: /tmp/loki  # Carpeta con permisos
-  storage:
-    filesystem:
-      directory: /tmp/loki/chunks
-  replication_factor: 1
-  ring:
-    kvstore:
-      store: inmemory
-
-compactor:
-  working_directory: /tmp/loki/compactor  # Carpeta con permisos
-  shared_store: filesystem
-  compaction_interval: 10m
+ingester:
+  lifecycler:
+    ring:
+      kvstore:
+        store: inmemory
+      replication_factor: 1
+  chunk_idle_period: 5m
+  max_chunk_age: 1h
+  chunk_retain_period: 30s
+  max_transfer_retries: 0
 
 schema_config:
   configs:
-    - from: 2024-01-01
-      store: tsdb
+    - from: 2022-01-01
+      store: boltdb
       object_store: filesystem
-      schema: v13
+      schema: v11
       index:
         prefix: index_
         period: 24h
 
 storage_config:
-  tsdb_shipper:
-    active_index_directory: /tmp/loki/index
-    cache_location: /tmp/loki/index_cache
-    shared_store: filesystem
+  boltdb:
+    directory: /loki-data/index
   filesystem:
-    directory: /tmp/loki/chunks
+    directory: /loki-data/chunks
+
+compactor:
+  working_directory: /loki-data/compactor
+  compaction_interval: 10m
 
 limits_config:
-  allow_structured_metadata: false
-  retention_period: 336h  # 14 días
+  enforce_metric_name: false
+  reject_old_samples: true
+  reject_old_samples_max_age: 168h
 
 chunk_store_config:
   max_look_back_period: 0s
 
 table_manager:
   retention_deletes_enabled: true
-  retention_period: 336h  # 14 días
+  retention_period: 168h
