@@ -13,4 +13,4 @@ USER nobody
 EXPOSE 3100
 
 # Comando por defecto (puede sobreescribirse en Render)
-CMD ["-config.file=/etc/loki/local-config.yaml"]
+CMD ["-config.file=/etc/loki/loki-config.yaml"]
