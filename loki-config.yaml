@@ -26,6 +26,7 @@ storage_config:
   boltdb_shipper:
     active_index_directory: /tmp/loki/index
     cache_location: /tmp/loki/cache
+    wal_directory: /tmp/loki/wal
 
   filesystem:
     directory: /tmp/loki/chunks
