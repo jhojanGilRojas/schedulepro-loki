@@ -3,6 +3,8 @@ server:
   log_level: info
 
 ingester:
+  wal:
+    dir: /tmp/loki/wal
   lifecycler:
     ring:
       kvstore:
